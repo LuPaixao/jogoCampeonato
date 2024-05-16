@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Listagem</title>
+</h:head>
+
+<h:body style="background-color: #e9ecff">
+	<h:form id="form">
+
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		<p:dataTable id="tabela" value="#{jogoBean.lista}" var="jogo"
+			editable="true" selectionMode="single" rowKey="#{jogo.id}">
+
+
+			<p:ajax event="rowEdit" listener="#{jogoBean.edit(jogo)}"
+				update=":form:tabela" />
+
+
+
+			<p:column headerText="Editar">
+				<p:rowEditor />
+			</p:column>
+
+			<p:column headerText="ID">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.id}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.id}" disabled="true" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="V1">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.v1}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.v1}" required="true"
+							validator="#{jogoBean.validateNumber}">
+							<f:validateLongRange minimum="1" maximum="10" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="V2">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.v2}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.v2}" required="true"
+							validator="#{jogoBean.validateNumber}">
+							<f:validateLongRange minimum="1" maximum="10" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="V3">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.v3}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.v3}" required="true"
+							validator="#{jogoBean.validateNumber}">
+							<f:validateLongRange minimum="1" maximum="10" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+
+			<p:column headerText="V4">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.v4}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.v4}" required="true"
+							validator="#{jogoBean.validateNumber}">
+							<f:validateLongRange minimum="1" maximum="10" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="V5">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.v5}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.v5}" required="true"
+							validator="#{jogoBean.validateNumber}">
+							<f:validateLongRange minimum="1" maximum="10" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:rowEditor />
+
+
+			<p:column headerText="Número sorteado">
+				<h:outputText value="#{jogo.numeroSorteado}" />
+			</p:column>
+			<p:column headerText="Excluir">
+				<p:commandButton style="background-color:red" icon="pi pi-trash"
+					title="Excluir" actionListener="#{jogoBean.delete(jogo.id)}"
+					update=":form:tabela" />
+			</p:column>
+
+			<p:column headerText="Maior">
+				<p:commandButton title="Maior"
+					actionListener="#{jogoBean.getMaxNumeroDasVariaveis(jogo)}"
+					update=":form:maiorNumVar"
+					oncomplete="PF('maiorNumDasVariaveisDialog').show()" />
+
+			</p:column>
+			
+			<p:column headerText="Resultado">
+				<p:commandButton title="Resultado"
+					actionListener="#{jogoBean.verificarNumeroSorteado(jogo, jogo.numeroSorteado)}"
+					update=":form:resultadoDialog"
+					oncomplete="PF('resultadoDialog').show()" />
+
+			</p:column>
+
+		</p:dataTable>
+
+		<p:dialog id="maiorNumDasVariaveisDialog"
+			header="Maior Número das Variáveis"
+			widgetVar="maiorNumDasVariaveisDialog" modal="true">
+
+			<h:panelGrid id="maiorNumVar" columns="2" cellpadding="5">
+				<h:outputText
+					value="O maior número entre as variáveis é: #{jogoBean.maiorNumDasVariaveis}" />
+			</h:panelGrid>
+		</p:dialog>
+		
+		<p:dialog id="resultadoDialog"
+			header="O número sorteado está nos informados?"
+			widgetVar="resultadoDialog" modal="true">
+
+			<h:panelGrid id="resultadoPanel" columns="2" cellpadding="5">
+				<h:outputText
+					value="#{jogoBean.resultadoVerificacao}" />
+			</h:panelGrid>
+		</p:dialog>
+
+
+
+
+		<p:dialog width="30%" id="maiorNumSorteado"
+			header="Maior número sorteado da tabela" widgetVar="maiorNumSorteado"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+
+			<h:panelGrid id="maiorNumSorteadoDialog" columns="2" cellpadding="5">
+				<h:outputText value="Número: " style="font-weight: bold" />
+				<h:outputText value="#{jogoBean.maiorNumSorteadoTabela}"
+					style="font-weight: bold" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<p:commandButton title="Maior número sorteado"
+			actionListener="#{jogoBean.getMaxNumeroSorteado}"
+			oncomplete="PF('maiorNumSorteado').show()"
+			update="maiorNumSorteadoDialog" />
+
+		<br />
+		<h:outputLink value="index.xhtml">Voltar para Cadastro</h:outputLink>
+	</h:form>
+</h:body>
+</html>

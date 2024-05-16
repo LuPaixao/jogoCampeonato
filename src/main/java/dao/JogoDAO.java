@@ -1,9 +1,11 @@
 package dao;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entities.Jogo;
 import util.JPAUtil;
@@ -63,6 +65,18 @@ public class JogoDAO {
 		List<Jogo> lista = q.getResultList();
 		em.clear();
 		return lista;
-		
 	}
+	
+	public static Integer findMaxNumeroSorteado() {
+		EntityManager em = JPAUtil.criarEntityManager();
+		TypedQuery<Integer> q = em.createNamedQuery("Jogo.findMaxNumeroSorteadoDaTabela", Integer.class);
+		Integer maxNumSorteado = q.getSingleResult();
+		em.clear();
+		return maxNumSorteado;
+	}
+	
+ 	public static Integer findMaxNumeroDasVariaveis(Jogo jogo) {
+ 		  List<Integer> valores = Arrays.asList(jogo.getV1(), jogo.getV2(), jogo.getV3(), jogo.getV4(), jogo.getV5());
+ 	        return valores.stream().max(Integer::compareTo).orElse(null);
+ 	}
 }
