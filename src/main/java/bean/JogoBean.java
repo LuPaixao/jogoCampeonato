@@ -21,8 +21,6 @@ public class JogoBean {
 	private Integer maiorNumDasVariaveis;
 	private String resultadoVerificacao;
 
-	
-
 	public String getResultadoVerificacao() {
 		return resultadoVerificacao;
 	}
@@ -31,12 +29,12 @@ public class JogoBean {
 		this.resultadoVerificacao = resultadoVerificacao;
 	}
 
-	public String save() {
+	public String salvar() {
 		if (jogo != null) {
 			jogo.setData(new Date());
 			Random random = new Random();
 			jogo.setNumeroSorteado(random.nextInt(10) + 1);
-			JogoDAO.save(jogo);
+			JogoDAO.salvar(jogo);
 			jogo = new Jogo();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo criado!"));
@@ -47,9 +45,9 @@ public class JogoBean {
 		return null;
 	}
 
-	public String edit(Jogo jogoEdit) {
-		if (jogoEdit != null) {
-			JogoDAO.edit(jogoEdit);
+	public String editar(Jogo jogoEditar) {
+		if (jogoEditar != null) {
+			JogoDAO.editar(jogoEditar);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo atualizado!"));
 			lista = JogoDAO.listar();
@@ -58,9 +56,9 @@ public class JogoBean {
 		return null;
 	}
 
-	public String delete(int id) {
+	public String deletar(int id) {
 
-		JogoDAO.delete(id);
+		JogoDAO.deletar(id);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo excluído!"));
 		lista = JogoDAO.listar();

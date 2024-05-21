@@ -20,16 +20,6 @@
 		<p:dataTable id="tabela" value="#{jogoBean.lista}" var="jogo"
 			editable="true" selectionMode="single" rowKey="#{jogo.id}">
 
-
-			<p:ajax event="rowEdit" listener="#{jogoBean.edit(jogo)}"
-				update=":form:tabela" />
-
-
-
-			<p:column headerText="Editar">
-				<p:rowEditor />
-			</p:column>
-
 			<p:column headerText="ID">
 				<p:cellEditor>
 					<f:facet name="output">
@@ -40,7 +30,6 @@
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
-
 
 			<p:column headerText="V1">
 				<p:cellEditor>
@@ -56,7 +45,6 @@
 				</p:cellEditor>
 			</p:column>
 
-
 			<p:column headerText="V2">
 				<p:cellEditor>
 					<f:facet name="output">
@@ -71,7 +59,6 @@
 				</p:cellEditor>
 			</p:column>
 
-
 			<p:column headerText="V3">
 				<p:cellEditor>
 					<f:facet name="output">
@@ -85,7 +72,6 @@
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
-
 
 			<p:column headerText="V4">
 				<p:cellEditor>
@@ -117,13 +103,20 @@
 
 			<p:rowEditor />
 
-
 			<p:column headerText="Número sorteado">
 				<h:outputText value="#{jogo.numeroSorteado}" />
 			</p:column>
+			
+			<p:ajax event="rowEdit" listener="#{jogoBean.editar(jogo)}"
+				update=":form:tabela" />
+
+			<p:column headerText="Editar">
+				<p:rowEditor />
+			</p:column>
+			
 			<p:column headerText="Excluir">
 				<p:commandButton style="background-color:red" icon="pi pi-trash"
-					title="Excluir" actionListener="#{jogoBean.delete(jogo.id)}"
+					title="Excluir" actionListener="#{jogoBean.deletar(jogo.id)}"
 					update=":form:tabela" />
 			</p:column>
 
@@ -165,10 +158,7 @@
 			</h:panelGrid>
 		</p:dialog>
 
-
-
-
-		<p:dialog width="30%" id="maiorNumSorteado"
+		<p:dialog width="40%" id="maiorNumSorteado"
 			header="Maior número sorteado da tabela" widgetVar="maiorNumSorteado"
 			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 
@@ -179,7 +169,7 @@
 			</h:panelGrid>
 		</p:dialog>
 
-		<p:commandButton title="Maior número sorteado"
+		<p:commandButton title="Maior número sorteado da tabela"
 			actionListener="#{jogoBean.getMaxNumeroSorteado}"
 			oncomplete="PF('maiorNumSorteado').show()"
 			update="maiorNumSorteadoDialog" />

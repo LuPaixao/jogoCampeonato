@@ -9,51 +9,49 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Página de Cadastro</title>
+	<title>Tela de Cadastro</title>
 </h:head>
 <h:body style="background-color: #e9ecff">
-	<h1 style="font-family: Arial, sans-serif; font-weight: 600;">Jogo
-		da Sorte!</h1>
-	<h3 style="font-family: Arial, sans-serif; font-weight: normal;">Arrisque
-		e acerte o número sorteado!</h3>
+	<h1 style="font-family: Arial, sans-serif; font-weight: 600;">Jogo da Sorte</h1>
+	<h3 style="font-family: Arial, sans-serif; font-weight: normal;">Diga e tente acertar o número sorteado!</h3>
 	<h:form>
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
 		</p:messages>
-		<h:outputLabel for="v1" value="Campo 1 (v1):" />
+		<h:outputLabel for="v1" value="Campo 1 -> v1:" />
 		<h:inputText id="v1" value="#{jogoBean.jogo.v1}" required="true"
 			validator="#{jogoBean.validateNumber}">
 			<f:validateLongRange minimum="1" maximum="10" />
 		</h:inputText>
 		<br />
-		<h:outputLabel for="v2" value="Campo 2 (v2):" />
+		<h:outputLabel for="v2" value="Campo 2 -> v2:" />
 		<h:inputText id="v2" value="#{jogoBean.jogo.v2}" required="true"
 			validator="#{jogoBean.validateNumber}">
 			<f:validateLongRange minimum="1" maximum="10" />
 		</h:inputText>
 		<br />
-		<h:outputLabel for="v3" value="Campo 3 (v3):" />
+		<h:outputLabel for="v3" value="Campo 3 -> v3:" />
 		<h:inputText id="v3" value="#{jogoBean.jogo.v3}" required="true"
 			validator="#{jogoBean.validateNumber}">
 			<f:validateLongRange minimum="1" maximum="10" />
 		</h:inputText>
 		<br />
-		<h:outputLabel for="v4" value="Campo 4 (v4):" />
+		<h:outputLabel for="v4" value="Campo 4 -> v4:" />
 		<h:inputText id="v4" value="#{jogoBean.jogo.v4}" required="true"
 			validator="#{jogoBean.validateNumber}">
 			<f:validateLongRange minimum="1" maximum="10" />
 		</h:inputText>
 		<br />
-		<h:outputLabel for="v5" value="Campo 5 (v5):" />
+		<h:outputLabel for="v5" value="Campo 5 -> v5:" />
 		<h:inputText id="v5" value="#{jogoBean.jogo.v5}" required="true"
 			validator="#{jogoBean.validateNumber}">
 			<f:validateLongRange minimum="1" maximum="10" />
 		</h:inputText>
 		<br />
-		<h:commandButton value="Salvar" action="#{jogoBean.save}" />
+		<h:commandButton value="Salvar" action="#{jogoBean.salvar}" />
 		<br />
 		<br />
-		<h:outputLink value="listagem.xhtml">Listagem</h:outputLink>
+		<h:outputLink value="listagem.xhtml">Listar</h:outputLink>
 	</h:form>
 
 </h:body>

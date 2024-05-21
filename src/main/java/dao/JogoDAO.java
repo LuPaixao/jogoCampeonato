@@ -12,35 +12,46 @@ import util.JPAUtil;
 
 public class JogoDAO {
 	
-	public static void save(Jogo jogo) {
+	public static void salvar(Jogo jogo) {
 		EntityManager em = JPAUtil.criarEntityManager();
+		 
+		try {
+			
+			em.getTransaction().begin();
+			em.persist(jogo);
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			em.getTransaction().rollback();
+			throw e;
+
+		}finally {
+			em.close();
+		}	
+	}
+	
+	public static void editar(Jogo jogo) {
+		EntityManager em = JPAUtil.criarEntityManager();
+		try {
+			
+			em.getTransaction().begin();		
+			em.merge(jogo);			
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			em.getTransaction().rollback();
+			throw e;
+		} finally {
+			em.close();
+
+		}
 		
-		em.getTransaction().begin();
-		
-		em.persist(jogo);
-		
-		em.getTransaction().commit();
-		
-		em.close();
 		
 	}
 	
-	
-	public static void edit(Jogo jogo) {
-		EntityManager em = JPAUtil.criarEntityManager();
-		
-		
-		em.getTransaction().begin();
-		
-		em.merge(jogo);
-		
-		em.getTransaction().commit();
-		
-		em.close();
-	}
-	
-	
-	public static void delete(int id) {
+	public static void deletar(int id) {
 		EntityManager em = JPAUtil.criarEntityManager();
 		
 		em.getTransaction().begin();
@@ -55,8 +66,7 @@ public class JogoDAO {
 		
 		em.close();
 		
-	}
-	
+	}	
 	
 	public static List<Jogo> listar() {
 		EntityManager em = JPAUtil.criarEntityManager();
