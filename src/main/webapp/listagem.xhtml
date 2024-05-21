@@ -125,7 +125,6 @@
 					actionListener="#{jogoBean.getMaxNumeroDasVariaveis(jogo)}"
 					update=":form:maiorNumVar"
 					oncomplete="PF('maiorNumDasVariaveisDialog').show()" />
-
 			</p:column>
 			
 			<p:column headerText="Resultado">
@@ -133,7 +132,6 @@
 					actionListener="#{jogoBean.verificarNumeroSorteado(jogo, jogo.numeroSorteado)}"
 					update=":form:resultadoDialog"
 					oncomplete="PF('resultadoDialog').show()" />
-
 			</p:column>
 
 		</p:dataTable>
