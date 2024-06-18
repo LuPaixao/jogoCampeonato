@@ -6,20 +6,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.swing.JFrame;
 
-import entities.Jogo;
+import entities.Campeonato;
 import util.JPAUtil;
 
-public class JogoDAO {
-	
+public class CampeonatoDao {
+
 	JFrame frame = new JFrame();
 	
-	public static void salvar(Jogo jogo) {
+	public static void salvar(Campeonato campeonato) {
 		EntityManager em = JPAUtil.criarEntityManager();
 		 
 		try {
 			
 			em.getTransaction().begin();
-			em.persist(jogo);
+			em.persist(campeonato);
 			em.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -32,12 +32,12 @@ public class JogoDAO {
 		}	
 	}
 	
-	public static void editar(Jogo jogo) {
+	public static void editar(Campeonato campeonato) {
 		EntityManager em = JPAUtil.criarEntityManager();
 		try {
 			
 			em.getTransaction().begin();		
-			em.merge(jogo);			
+			em.merge(campeonato);			
 			em.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -56,10 +56,10 @@ public class JogoDAO {
 		
 		em.getTransaction().begin();
 		
-		Jogo jogoDelete = em.find(Jogo.class, id);
+		Campeonato exlcuirCampeonato = em.find(Campeonato.class, id);
 		
-		if(jogoDelete != null) {
-			em.remove(jogoDelete);
+		if(exlcuirCampeonato != null) {
+			em.remove(exlcuirCampeonato);
 		}
 		
 		em.getTransaction().commit();
@@ -68,33 +68,29 @@ public class JogoDAO {
 		
 	}	
 	
-	public static List<Jogo> listar() {
+	public static List<Campeonato> listar() {
 		EntityManager em = JPAUtil.criarEntityManager();
 		
-		Query q = em.createQuery("SELECT a FROM Jogo a");
-		List<Jogo> lista = q.getResultList();
+		Query q = em.createQuery("SELECT a FROM Campeonato a");
+		List<Campeonato> lista = q.getResultList();
 		em.clear();
 		return lista;
 	}
-
-	public static boolean verificarTimeSelecionado(Jogo jogo) {
+	
+	public static Campeonato busrcarPorId(Integer id) {
 		EntityManager em = JPAUtil.criarEntityManager();
 
 		try {
-			Query query = em.createQuery(
-				"SELECT COUNT(j) FROM Jogo j WHERE "
-					+  "j.time1 = :time1 AND j.time2 = :time2"
-				);
-			query.setParameter("time1", jogo.getTime1());
-			query.setParameter("time2", jogo.getTime2());
-			Long count = (Long) query.getSingleResult();
-			return count > 0;
+			return em.find(Campeonato.class, id);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			System.out.println("Erro ao buscar por ID: " + e.getMessage());
 		} finally {
 			em.close();
 		}
-		
+		return null;
+
 	}
+	
+
 	
 }

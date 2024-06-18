@@ -1,44 +1,40 @@
 package bean;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import java.util.Random;
 
+import dao.CampeonatoDao;
 import dao.JogoDAO;
+import entities.Campeonato;
 import entities.Jogo;
 
 @ManagedBean
 public class JogoBean {
 	private Jogo jogo = new Jogo();
 	private List<Jogo> lista;
-	private Integer maiorNumSorteadoTabela;
-	private Integer maiorNumDasVariaveis;
-	private String resultadoVerificacao;
-
-	public String getResultadoVerificacao() {
-		return resultadoVerificacao;
-	}
-
-	public void setResultadoVerificacao(String resultadoVerificacao) {
-		this.resultadoVerificacao = resultadoVerificacao;
+	
+	private List<Campeonato> campeonatos;
+	private Integer idCampeonatoSelecionado;
+	
+	public JogoBean() {
+		this.campeonatos = CampeonatoDao.listar();
 	}
 
 	public String salvar() {
+		if(jogo.getTime1() == jogo.getTime2()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Os times não podem ser iguais!"));
+			return null;
+		}
 		if (jogo != null) {
-			jogo.setData(new Date());
-			Random random = new Random();
-			jogo.setNumeroSorteado(random.nextInt(10) + 1);
+			jogo.setCampeonato(CampeonatoDao.busrcarPorId(idCampeonatoSelecionado));
 			JogoDAO.salvar(jogo);
 			jogo = new Jogo();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo criado!"));
-			lista = JogoDAO.listar();
 			return "listagem.xhtml";
 
 		}
@@ -51,14 +47,14 @@ public class JogoBean {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo atualizado!"));
 			lista = JogoDAO.listar();
-			return "listagem.xthml";
+			return null;
 		}
 		return null;
 	}
 
-	public String deletar(int id) {
+	public String excluir(int id) {
 
-		JogoDAO.deletar(id);
+		JogoDAO.excluir(id);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo excluído!"));
 		lista = JogoDAO.listar();
@@ -67,38 +63,7 @@ public class JogoBean {
 	}
 
 	public List<Jogo> getLista() {
-		if (lista == null) {
-			lista = JogoDAO.listar();
-		}
-
-		return lista;
-	}
-
-	public void validateNumber(FacesContext context, UIComponent component, Object value) {
-		int number = (Integer) value;
-		if (number < 1 || number > 10) {
-			FacesMessage message = new FacesMessage("Número inválido: deve ser entre 1 e 10.");
-			throw new ValidatorException(message);
-		}
-	}
-
-	public Integer getMaxNumeroSorteado() {
-		maiorNumSorteadoTabela = JogoDAO.findMaxNumeroSorteado();
-		return maiorNumSorteadoTabela;
-	}
-
-	public Integer getMaxNumeroDasVariaveis(Jogo jogo) {
-		maiorNumDasVariaveis = JogoDAO.findMaxNumeroDasVariaveis(jogo);
-	System.out.println("maior num da var" + maiorNumDasVariaveis);
-		return maiorNumDasVariaveis;
-	}
-	
-	public void verificarNumeroSorteado(Jogo jogo, int numeroSorteado) {
-	    if (numeroSorteado >= jogo.getV1() && numeroSorteado <= jogo.getV5()) {
-	        resultadoVerificacao = "sim";
-	    } else {
-	        resultadoVerificacao = "não";
-	    }
+		return JogoDAO.listar();
 	}
 
 	public void setLista(List<Jogo> lista) {
@@ -112,21 +77,23 @@ public class JogoBean {
 	public void setJogo(Jogo jogo) {
 		this.jogo = jogo;
 	}
+
+	public List<Campeonato> getCampeonatos() {
+		return campeonatos;
+	}
+
+	public void setCampeonatos(List<Campeonato> campeonatos) {
+		this.campeonatos = campeonatos;
+	}
+
+	public Integer getIdCampeonatoSelecionado() {
+		return idCampeonatoSelecionado;
+	}
+
+	public void setIdCampeonatoSelecionado(Integer idCampeonatoSelecionado) {
+		this.idCampeonatoSelecionado = idCampeonatoSelecionado;
+	}
 	
-	public Integer getMaiorNumDasVariaveis() {
-		return maiorNumDasVariaveis;
-	}
-
-	public void setMaiorNumDasVariaveis(Integer maiorNumDasVariaveis) {
-		this.maiorNumDasVariaveis = maiorNumDasVariaveis;
-	}
-
-	public Integer getMaiorNumSorteadoTabela() {
-		return maiorNumSorteadoTabela;
-	}
-
-	public void setMaiorNumSorteadoTabela(Integer maiorNumSorteadoTabela) {
-		this.maiorNumSorteadoTabela = maiorNumSorteadoTabela;
-	}
-
+	
+	
 }

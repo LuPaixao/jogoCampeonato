@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Listagem</title>
+	<title>Listagem de Campeonatos</title>
 </h:head>
 
 <h:body style="background-color: #e9ecff">
@@ -17,41 +17,39 @@
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
 		</p:messages>
-		<p:dataTable id="tabela" value="#{jogoBean.lista}" var="jogo"
-			editable="true" selectionMode="single" rowKey="#{jogo.id}">
+		
+		<p:dataTable id="tabela" value="#{campeonatoBean.lista}" var="campeonato"
+			editable="true" selectionMode="single" rowKey="#{campeonato.id}">
 
 			<p:column headerText="ID">
 				<p:cellEditor>
 					<f:facet name="output">
-						<h:outputText value="#{jogo.id}" />
+						<h:outputText value="#{campeonato.id}" />
 					</f:facet>
 					<f:facet name="input">
-						<h:inputText value="#{jogo.id}" disabled="true" />
+						<h:inputText value="#{campeonato.id}" disabled="true" />
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
 
+			<p:column headerText="Nome">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{campeonato.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{campeonato.nome}" disabled="true" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
 
 			<p:rowEditor />
+	
 
-		<!--  
-			<p:ajax event="rowEdit" listener="#{jogoBean.editar(jogo)}"
-				update=":form:tabela" />
-
-			<p:column headerText="Editar">
-				<p:rowEditor />
-			</p:column>
-			
-			<p:column headerText="Excluir">
-				<p:commandButton style="background-color:red" icon="pi pi-trash"
-					title="Excluir" actionListener="#{jogoBean.deletar(jogo.id)}"
-					update=":form:tabela" />
-			</p:column>
-		-->
-		
 		</p:dataTable>
+		<br />
 		
-		<h:outputLink value="index.xhtml">Voltar para Cadastro</h:outputLink>
+		<h:outputLink value="cadastro_campeonato.xhtml">Voltar para Cadastro</h:outputLink>
 	</h:form>
 </h:body>
 </html>
