@@ -43,8 +43,11 @@
 				</p:cellEditor>
 			</p:column>
 
-			<p:rowEditor />
-	
+		<p:column headerText="Excluir">
+				<p:commandButton style="background-color:red" icon="pi pi-trash" title="Excluir"
+					actionListener="#{campeonatoBean.excluir(campeonato.id)}"
+					update=":form:tabela" />
+			</p:column>
 
 		</p:dataTable>
 		<br />

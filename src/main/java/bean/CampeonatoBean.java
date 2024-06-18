@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import dao.CampeonatoDao;
+import dao.JogoDAO;
 import entities.Campeonato;
 
 @ManagedBean
@@ -22,6 +23,16 @@ public class CampeonatoBean {
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Sucesso!", "Campeonato cadastrado!"));
 		return "listarCampeonato.xhtml";
+	}
+	
+	public String excluir(int id) {
+
+		CampeonatoDao.excluir(id);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Campeonato excluído!"));
+		lista = CampeonatoDao.listar();
+		return "listarCampeonatos.xthml";
+
 	}
 
 	
