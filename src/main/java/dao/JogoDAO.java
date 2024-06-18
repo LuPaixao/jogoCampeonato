@@ -36,7 +36,10 @@ public class JogoDAO {
 		EntityManager em = JPAUtil.criarEntityManager();
 		try {
 			
-			em.getTransaction().begin();		
+			em.getTransaction().begin();	
+			
+			Jogo jogoOriginal = getJogoPorId(jogo.getId());
+			
 			em.merge(jogo);			
 			em.getTransaction().commit();
 			
@@ -95,6 +98,20 @@ public class JogoDAO {
 			em.close();
 		}
 		
+	}
+	
+	public static Jogo getJogoPorId(Integer id) {
+		EntityManager em = JPAUtil.criarEntityManager();
+
+		try {
+			return em.find(Jogo.class, id);
+		} catch (Exception e) {
+			System.out.println("Erro ao buscar por ID: " + e.getMessage());
+		} finally {
+			em.close();
+		}
+		return null;
+
 	}
 	
 }

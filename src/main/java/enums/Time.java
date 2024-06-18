@@ -1,6 +1,6 @@
 package enums;
 
-public enum Times {
+public enum Time {
 	
 	A, B, C;
 

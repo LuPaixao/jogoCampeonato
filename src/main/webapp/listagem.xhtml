@@ -17,23 +17,104 @@
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
 		</p:messages>
+		
 		<p:dataTable id="tabela" value="#{jogoBean.lista}" var="jogo"
 			editable="true" selectionMode="single" rowKey="#{jogo.id}">
+			
+		<p:ajax event="rowEdit" listener="#{jogoBean.editar(jogo)}"
+				update=":form:tabela" />
 
 			<p:column headerText="ID">
+				<p:outputLabel value="#{jogo.id}" />
+			</p:column>
+			
+			<p:column headerText="Data de cadastro">
+				<p:outputLabel value="#{jogo.dataCadastro}" />
+			</p:column>
+			
+			<p:column headerText="Data de partida">
 				<p:cellEditor>
 					<f:facet name="output">
-						<h:outputText value="#{jogo.id}" />
+						<h:outputText value="#{jogo.dataPartida}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR"
+								timeZone="GMT-03:00" />
+						</h:outputText>
 					</f:facet>
 					<f:facet name="input">
-						<h:inputText value="#{jogo.id}" disabled="true" />
+					<p:datePicker id="time"
+						value="#{jogo.dataPartida}" showIcon="true"  showButtonBar="true" showTime="true" timeInput="true"  required="true" requiredMessage="Campo obrigatório"/>
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
+			
+			
+			<p:column headerText="Time 1">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.time1}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.time1}"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Time 2">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.time2}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.time2}"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Gols do time 1">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.golsTime1}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.golsTime1}"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Gols do time 2">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.golsTime2}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.golsTime2}"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="CAMPEONATO">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{jogo.campeonato.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{jogo.campeonato.nome}"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Editar"
+				style="width: 100px; text-align: center;">
+				<p:rowEditor />
+			</p:column>
+			
+			<p:column headerText="Excluir">
+				<p:commandButton style="background-color:red" icon="pi pi-trash" title="Excluir"
+					actionListener="#{jogoBean.excluir(jogo.id)}"
+					update=":form:tabela" />
+			</p:column>
 
-
-			<p:rowEditor />
-
+	
 		<!--  
 			<p:ajax event="rowEdit" listener="#{jogoBean.editar(jogo)}"
 				update=":form:tabela" />

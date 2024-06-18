@@ -41,15 +41,14 @@ public class JogoBean {
 		return null;
 	}
 
-	public String editar(Jogo jogoEditar) {
+	public void editar(Jogo jogoEditar) {
+		Jogo jogoOriginal = getJogoPorId(jogoEditar.getId());
 		if (jogoEditar != null) {
 			JogoDAO.editar(jogoEditar);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Jogo atualizado!"));
 			lista = JogoDAO.listar();
-			return null;
 		}
-		return null;
 	}
 
 	public String excluir(int id) {
@@ -60,6 +59,10 @@ public class JogoBean {
 		lista = JogoDAO.listar();
 		return "listagem.xthml";
 
+	}
+	
+	public Jogo getJogoPorId(int id) {
+		return JogoDAO.getJogoPorId(id);
 	}
 
 	public List<Jogo> getLista() {

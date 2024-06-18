@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import enums.Times;
+import enums.Time;
 
 @Entity
 public class Jogo {
@@ -34,10 +34,10 @@ public class Jogo {
 	private Date dataCadastro;
 	
 	@Enumerated(EnumType.STRING)	
-	private Times time1;
+	private Time time1;
 
 	@Enumerated(EnumType.STRING)	
-	private Times time2;
+	private Time time2;
 	
 	@Column(name = "gols_time_um")
 	private Integer golsTime1;
@@ -73,19 +73,19 @@ public class Jogo {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Times getTime1() {
+	public Time getTime1() {
 		return time1;
 	}
 
-	public void setTime1(Times time1) {
+	public void setTime1(Time time1) {
 		this.time1 = time1;
 	}
 
-	public Times getTime2() {
+	public Time getTime2() {
 		return time2;
 	}
 
-	public void setTime2(Times time2) {
+	public void setTime2(Time time2) {
 		this.time2 = time2;
 	}
 
